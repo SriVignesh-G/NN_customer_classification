@@ -46,8 +46,8 @@ Optimization: Tune hyperparameters (layers, neurons, learning rate, batch size).
 
 ## PROGRAM
 
-### Name: 
-### Register Number:
+### Name: Sri Vignesh G    
+### Register Number: 212223040204
 
 ```python
 class PeopleClassifier(nn.Module):
