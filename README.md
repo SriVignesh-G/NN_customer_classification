@@ -14,16 +14,34 @@ You are required to help the manager to predict the right group of the new custo
 
 ## Neural Network Model
 
-Include the neural network model diagram.
+![image](https://github.com/user-attachments/assets/3689221b-1280-4ca9-9760-d594e5982d50)
+
 
 ## DESIGN STEPS
 
 ### STEP 1:
-Write your own steps
+Data Preprocessing: Clean, normalize, and split data into training, validation, and test sets.
 
 ### STEP 2:
+Model Design:
+
+Input Layer: Number of neurons = features.
+
+Hidden Layers: 2 layers with ReLU activation.
+
+Output Layer: 4 neurons (segments A, B, C, D) with softmax activation.
 
 ### STEP 3:
+Model Compilation: Use categorical cross-entropy loss, Adam optimizer, and track accuracy.
+
+### STEP 4:
+Training: Train with early stopping, batch size (e.g., 32), and suitable epochs.
+
+### STEP 5:
+Evaluation: Assess using accuracy, confusion matrix, precision, and recall.
+
+### STEP 6:
+Optimization: Tune hyperparameters (layers, neurons, learning rate, batch size).
 
 
 ## PROGRAM
@@ -35,47 +53,58 @@ Write your own steps
 class PeopleClassifier(nn.Module):
     def __init__(self, input_size):
         super(PeopleClassifier, self).__init__()
-        #Include your code here
-
-
-
+        self.fc1 = nn.Linear(input_size, 32)
+        self.fc2 = nn.Linear(32, 16)
+        self.fc3 = nn.Linear(16, 8)
+        self.fc4 = nn.Linear(8, 4)
     def forward(self, x):
-        #Include your code here
+        x=F.relu(self.fc1(x))
+        x=F.relu(self.fc2(x))
+        x=F.relu(self.fc3(x))
+        x=self.fc4(x)
+        return x
         
-
 ```
 ```python
 # Initialize the Model, Loss Function, and Optimizer
-
-
+model =PeopleClassifier(input_size=X_train.shape[1])
+criterion =nn.CrossEntropyLoss()
+optimizer =optim.Adam(model.parameters(),lr=0.001)
 ```
 ```python
-def train_model(model, train_loader, criterion, optimizer, epochs):
-    #Include your code here
+def train(trainloader,model,criterion,optimizer,epochs):
+  for epoch in range(epochs):
+    model.train()
+    for X_batch,y_batch in train_loader:
+      optimizer.zero_grad()
+      y_pred = model(X_batch)
+      loss = criterion(y_pred,y_batch)
+      loss.backward()
+      optimizer.step()
+    if (epoch+1)%20 == 0:
+      print(f"Epoch [{epoch+1}/{epochs}],Loss:{loss.item():.4f}")
 ```
-
-
 
 ## Dataset Information
 
-Include screenshot of the dataset
+![image](https://github.com/user-attachments/assets/d8718f6f-1464-4476-a599-45dd261c6fd4)
+
 
 ## OUTPUT
 
-
-
 ### Confusion Matrix
 
-Include confusion matrix here
+![download](https://github.com/user-attachments/assets/8de88631-256b-4b0c-8c07-dd1d4567596a)
+
 
 ### Classification Report
 
-Include Classification Report here
-
+![image](https://github.com/user-attachments/assets/03608949-18a5-4ef6-9d75-e156258ff027)
 
 ### New Sample Data Prediction
 
-Include your sample input and output here
+![image](https://github.com/user-attachments/assets/a9a35a40-c13a-46ec-947d-da48c148e700)
+
 
 ## RESULT
-Include your result here
+Thus a neural network classification model for the given dataset is executed successfully.
